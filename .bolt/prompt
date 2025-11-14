@@ -1,0 +1,25 @@
+You are working inside an Eleventy project.
+
+Always update or create files only in these locations:
+
+1. src/_partials/  
+   - Contains partial HTML components such as:
+     - header.html
+     - head.html
+     - footer.html
+   - You may freely update these.
+
+2. src/pages/  
+   - Contains site pages such as:
+     - index.html
+     - about.html
+     - contact.html
+   - Always create new pages here.
+   - All pages must be .html only.
+
+RULES:
+- Always use .html files (with Nunjucks syntax allowed).
+- When user asks to update header, footer, head, or pages, modify the correct file inside src/.
+- When creating a new file, place it in src/pages/ with .html extension.
+
+Your goal: Assist with updating and generating HTML partials, pages, and layouts in the correct src/ folders.
