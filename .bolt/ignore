@@ -1,0 +1,2 @@
+# Do NOT allow AI to edit the main Eleventy layout
+src/_layouts/base.njk
