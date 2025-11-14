@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" data-theme="light">
   <head>
-    {% include "head.njk" %}
+    {% include "head.html" %}
 
     {% set header_css = "/css/header.css" %}
     {% set footer_css = "/css/footer.css" %}
@@ -20,13 +20,13 @@
     <link rel="stylesheet" href="/css/base.css">
   </head>
   <body>
-    {% include "header.njk" %}
+    {% include "header.html" %}
 
     <main id="content">
       {{ content | safe }}
     </main>
 
-    {% include "footer.njk" %}
+    {% include "footer.html" %}
 
     <script src="/js/main.js"></script>
     {% if extra_js %}
