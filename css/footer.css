@@ -1,0 +1,15 @@
+.site-footer {
+  background-color: #111;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 2.5rem 1rem;
+}
+
+.site-footer a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  margin: 0 0.35rem;
+}
+
+.site-footer a:hover {
+  color: #ffffff;
+}

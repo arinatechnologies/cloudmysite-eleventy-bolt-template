@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    {% include "head.njk" %}
+
+    {% set header_css = "/css/header.css" %}
+    {% set footer_css = "/css/footer.css" %}
+
+    <link rel="stylesheet" href="{{ header_css }}">
+    <link rel="stylesheet" href="{{ footer_css }}">
+
+    {% if extra_css %}
+      {% for href in extra_css %}
+        {% if href != header_css and href != footer_css %}
+          <link rel="stylesheet" href="{{ href }}">
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    <link rel="stylesheet" href="/css/base.css">
+  </head>
+  <body>
+    {% include "header.njk" %}
+
+    <main id="content">
+      {{ content | safe }}
+    </main>
+
+    {% include "footer.njk" %}
+
+    <script src="/js/main.js"></script>
+    {% if extra_js %}
+      {% for src in extra_js %}
+        <script src="{{ src }}"></script>
+      {% endfor %}
+    {% endif %}
+  </body>
+</html>

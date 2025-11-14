@@ -1,0 +1,64 @@
+---
+layout: ../_layouts/base.njk
+title: "CloudMySite Bolt Landing"
+permalink: "/"
+extra_css:
+  - "/css/style.css"
+extra_js: []
+---
+
+<section class="hero-section">
+  <div class="hero-content">
+    <p class="eyebrow">Bolt-ready Eleventy kit</p>
+    <h1>Ship pages faster with design tokens tuned for Bolt</h1>
+    <p>
+      Every template pulls in Bootstrap 5 + Font Awesome 6 via CDN, keeps the main
+      navigation sticky, and leaves the hero spotlight open to the GrapesJS editor.
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-primary">Start a prototype</a>
+      <a href="#" class="btn btn-outline-light">See docs</a>
+    </div>
+  </div>
+</section>
+
+<section class="features-section">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-md-4">
+        <article class="feature-card">
+          <i class="fa-solid fa-rocket"></i>
+          <h3>Launch-ready</h3>
+          <p>Clean layout with semantic HTML and Bootstrap utilities so Bolt can scope documents effortlessly.</p>
+        </article>
+      </div>
+      <div class="col-md-4">
+        <article class="feature-card">
+          <i class="fa-solid fa-paintbrush"></i>
+          <h3>Editor-friendly</h3>
+          <p>Pointer events are reserved for the image, keeping overlays decorative but never blocking clicks.</p>
+        </article>
+      </div>
+      <div class="col-md-4">
+        <article class="feature-card">
+          <i class="fa-solid fa-cubes-stacked"></i>
+          <h3>Modular</h3>
+          <p>Keep header/footer styles global and drop page-specific blocks via `extra_css` / `extra_js`.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card">
+      <h2>Ready to plug into Bolt?</h2>
+      <p>Install npm dependencies, run `npm run start`, and mount this site inside your Bolt workspaces.</p>
+      <div class="cta-actions">
+        <span class="badge bg-light text-dark">npm install</span>
+        <span class="badge bg-light text-dark">npm run start</span>
+      </div>
+    </div>
+  </div>
+</section>

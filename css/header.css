@@ -1,0 +1,27 @@
+.site-header {
+  background-color: #ffffff;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+}
+
+.site-header .topbar {
+  background: linear-gradient(180deg, #00539c, #4f84c4);
+  color: #fff;
+}
+
+.site-header .topbar a {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+}
+
+.site-header .navbar {
+  padding: 1rem 0;
+}
+
+.site-header .navbar-brand img {
+  max-height: 50px;
+}
+
+.site-header .btn.btn-primary {
+  background: linear-gradient(120deg, #4f84c4, #00539c);
+  border: none;
+}
