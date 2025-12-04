@@ -1,51 +1,242 @@
-You are working inside an Eleventy project.
+You are working inside an Eleventy (11ty) project that must be fully editable inside GrapesJS.
 
-Always update or create files only in these locations:
+Assume:
+- approval_policy: never
+- Commit directly to main
+- Do NOT create branches or ask questions
 
-1. src/_partials/  
-   - Contains partial HTML components such as:
-     - header.html
-     - head.html
-     - footer.html
-   - You may freely update these.
+===================================
+📁 PROJECT STRUCTURE & FILE RULES
+===================================
 
-2. src/pages/  
-   - Contains site pages such as:
-     - index.html
-     - about.html
-     - contact.html
-   - Always create new pages here.
-   - All pages must be .html only.
+All work happens in this structure:
 
-RULES FOR PAGE GENERATION:
-- Every page you create must include **at least 4–5 structured sections**.
-  Examples:
-    - Hero section
-    - Features section
-    - About / Info section
-    - Testimonials section
-    - FAQ section
-    - Call-to-action section
-  (Exact sections may vary based on the page topic.)
+src/
+  pages/*.html        ← all pages (index, about, contact, etc.)
+  _layouts/base.njk   ← single global layout
+  _partials/head.html
+  _partials/header.html
+  _partials/footer.html
 
-CONTACT PAGE FORM RULE:
-If the page includes a contact form, it MUST use the following structure:
+css/
+js/
+images/
+lib/        ← only if needed after cleanup
+
+Output directory: public/
+
+Passthrough: /css, /js, /images, /assets (if present).
+
+FILE LOCATION RULES:
+- Pages: always in src/pages/ with .html extension (Nunjucks allowed).
+- Partials: only in src/_partials/.
+- Layout: only src/_layouts/base.njk.
+- You may freely update head.html, header.html, footer.html, base.njk, and any page in src/pages/.
+
+===================================
+📄 PAGE GENERATION RULES
+===================================
+
+For each page (index.html, about.html, contact.html, etc.):
+
+1) Use this front-matter:
+---
+layout: ../_layouts/base.njk
+title: "Page Title"
+permalink: "/page.html"
+extra_css: []
+extra_js: []
+---
+
+2) Each page MUST have at least 4–5 clear content sections, e.g.:
+   - Hero / Top banner
+   - Features / Services
+   - About / Info
+   - Testimonials / Logos / Social proof
+   - FAQ
+   - Call-to-action (CTA)
+
+3) CONTACT PAGE FORM RULE:
+If a page has a contact form, it MUST use:
 
 <form id="contactForm"
+      class="custom-contact-form"
+      data-form-handler
       data-api=""
       data-from="noreply@example.com"
-      data-success="Thank you! We will get back to you soon"
+      data-success="Thank you! We will get back to you soon."
       data-error="Oops! Something went wrong."
-      data-report-label="template-form"
-      class="custom-contact-form">
+      data-report-label="template-form">
 
   <!-- Form fields here -->
 
 </form>
 
-RULES:
-- Always use .html files (with Nunjucks syntax allowed).
-- When user asks to update header, footer, head, or pages, modify the correct file inside src/.
-- When creating a new file, place it in src/pages/ with .html extension.
+This structure must be preserved so JS can handle submission.
 
-Your goal: Assist with updating and generating HTML partials, pages, and layouts in the correct src/ folders.
+===================================
+🧱 LAYOUT & PARTIALS
+===================================
+
+Create and maintain exactly ONE of each:
+
+- src/_partials/head.html
+- src/_partials/header.html
+- src/_partials/footer.html
+
+base.njk must:
+
+- Include head, header, and footer partials
+- Render page content as:
+  <main>
+    {{ content | safe }}
+  </main>
+- Load global CSS/JS:
+  - /css/header.css
+  - /css/footer.css
+  - /js/base.js
+  - /js/form-handler.js
+- Loop and include any extra_css / extra_js arrays from front-matter without duplicates.
+
+HEADER RULE:
+- src/_partials/header.html must be plain, valid HTML for the nav (no Eleventy-specific placeholder logic in the markup).
+- Navigation must be styled via /css/header.css (e.g., forced background, high z-index, cleaned toggler styles).
+
+===================================
+🔁 HTML → ELEVENTY CONVERSION
+===================================
+
+For each imported static HTML theme page:
+
+1) Extract the real main content (central container) and put it in src/pages/*.html.
+2) Remove duplicated head/header/footer markup; use base.njk + partials instead.
+3) Rewrite asset URLs as root-relative:
+   - /css/...
+   - /js/...
+   - /images/...
+
+Eleventy pages must preserve:
+- Original look & layout
+- Menus and URLs
+- Interactive behavior (as much as possible without jQuery-only plugins)
+
+===================================
+🖼 GRAPESJS EDITABILITY & IMAGES
+===================================
+
+GOAL: All visual content must be easily editable in GrapesJS.
+
+1) All meaningful images must be <img> elements in the HTML.
+   - Do NOT hide key images inside CSS background-image.
+   - Example:
+     ❌ style="background-image: url('/images/carousel-1.jpg');"
+     ✅ <img src="/images/carousel-1.jpg" alt="...">
+
+2) If CSS previously used background-image for key visuals, move them into <img> tags in the HTML structure instead.
+
+3) For overlay/hover effects that might block clicks in the editor:
+   - Overlays can use:
+     pointer-events: none;
+     z-index: 0;
+   - Ensure the <img> itself remains easily clickable in GrapesJS.
+
+4) Restructure/move assets:
+   - /assets/images/* → /images/*
+   - /img/* → /images/*
+   - Update all paths in HTML/CSS/JS accordingly.
+   - No images should remain in nested, theme-specific folders once migrated.
+
+===================================
+🧷 ICONS & FONTS (FLATICON → FA6)
+===================================
+
+1) Remove Flaticon:
+   - Remove all flaticon CSS and font files.
+   - Delete /lib/flaticon/* and flaticon.css (or equivalent).
+   - Replace all .flaticon-* icon classes with Font Awesome 6 equivalents (use appropriate fa-solid / fa-regular / fa-brands classes).
+
+2) In head.html, include CDN fonts only (no local /fonts folder):
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/icomoon/1.0.0/style.min.css">
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+
+3) Ensure any icon markup in HTML and CSS is updated to use the new Font Awesome classes.
+
+===================================
+📦 BOOTSTRAP 4 → BOOTSTRAP 5 CLEANUP
+===================================
+
+Update markup and attributes:
+
+- data-toggle   → data-bs-toggle
+- data-target   → data-bs-target
+- mr-*          → me-*
+- ml-*          → ms-*
+- form-group    → mb-3 (or equivalent modern spacing)
+
+Ensure dropdowns and togglers have correct ARIA attributes for Bootstrap 5 patterns.
+
+===================================
+🎠 CAROUSEL MODERNIZATION (NO OWL)
+===================================
+
+Remove jQuery-only carousel code:
+
+- Delete /lib/owlcarousel/* and /lib/waypoints/*, /lib/counterup/* if only used with jQuery/Owl.
+- Remove jQuery-dependent scripts from pages and extra_js.
+
+Convert Owl-style markup:
+
+OLD:
+<div class="categories-carousel owl-carousel">
+  <!-- items -->
+</div>
+
+NEW:
+<div class="categories-carousel carousel-scroll">
+  <button class="carousel-nav prev" type="button" aria-label="Previous">‹</button>
+  <div class="carousel-track">
+    <!-- original item blocks go here -->
+  </div>
+  <button class="carousel-nav next" type="button" aria-label="Next">›</button>
+</div>
+
+Add to main CSS:
+- scroll-snap based horizontal scrolling
+- flex layout for .carousel-track
+- responsive item sizing
+- simple styles for .carousel-nav buttons
+
+Add to /js/main.js (no jQuery):
+- On DOMContentLoaded, attach click handlers to each carousel’s nav buttons.
+- Scroll the track left/right by ~80% of its width.
+
+In GrapesJS, even without JS, carousel items must appear visible and editable in the editor.
+
+===================================
+🧾 SCSS → CSS
+===================================
+
+- Move any compiled CSS files into /css.
+- Update all HTML references to point to /css/*.css.
+- Remove any /scss or /sass folders from the project and do not reference them.
+
+===================================
+✅ SUMMARY
+===================================
+
+Your main objectives:
+
+- Use a single Eleventy layout (base.njk) and shared partials (head, header, footer).
+- Convert all pages into src/pages/*.html with Nunjucks front-matter.
+- Ensure all key images are <img> tags (no background-image for editable content).
+- Make the entire site cleanly editable inside GrapesJS.
+- Replace Flaticon with Font Awesome 6 using CDN fonts.
+- Modernize to Bootstrap 5 patterns.
+- Remove jQuery-only Owl carousel and replace with modern, JS-light carousels.
+- Remove SCSS folder and ensure all styles load from /css.
+- Keep the final site visually similar to the original theme while being structured, maintainable, and GrapesJS-friendly.
